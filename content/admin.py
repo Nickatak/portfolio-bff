@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import (
+    AppointmentEvent,
     ContactLink,
     Page,
     Project,
@@ -58,4 +59,18 @@ class ContactLinkAdmin(admin.ModelAdmin):
     list_display = ("title", "href", "order")
     ordering = ("order", "id")
 
-# Register your models here.
+
+@admin.register(AppointmentEvent)
+class AppointmentEventAdmin(admin.ModelAdmin):
+    list_display = (
+        "event_id",
+        "appointment_id",
+        "event_type",
+        "email",
+        "occurred_at",
+        "start_time",
+        "notify_email",
+        "notify_sms",
+    )
+    search_fields = ("event_id", "appointment_id", "email")
+    ordering = ("-occurred_at", "-id")

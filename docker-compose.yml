@@ -7,3 +7,27 @@ services:
       dockerfile: Dockerfile
     ports:
       - "${PORTFOLIO_BFF_PORT:-8001}:8000"
+    volumes:
+      - ./db.sqlite3:/app/db.sqlite3
+
+  consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["sh", "-c", "python manage.py migrate && python manage.py consume_appointments"]
+    depends_on:
+      - bff
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-kafka:19092}
+      KAFKA_TOPIC_APPOINTMENTS_CREATED: ${KAFKA_TOPIC_APPOINTMENTS_CREATED:-appointments.created}
+      KAFKA_CONSUMER_GROUP: ${KAFKA_CONSUMER_GROUP:-portfolio-bff}
+      KAFKA_AUTO_OFFSET_RESET: ${KAFKA_AUTO_OFFSET_RESET:-latest}
+    volumes:
+      - ./db.sqlite3:/app/db.sqlite3
+    networks:
+      - notifier
+
+networks:
+  notifier:
+    external: true
+    name: notifier_service_default

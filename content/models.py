@@ -96,3 +96,29 @@ class ContactLink(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+
+class AppointmentEvent(models.Model):
+    event_id = models.CharField(max_length=100, unique=True)
+    event_type = models.CharField(max_length=100)
+    occurred_at = models.DateTimeField()
+    kafka_topic = models.CharField(max_length=200, blank=True)
+    kafka_partition = models.IntegerField(null=True, blank=True)
+    kafka_offset = models.BigIntegerField(null=True, blank=True)
+    appointment_id = models.CharField(max_length=100)
+    user_id = models.CharField(max_length=100, blank=True)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    duration_minutes = models.PositiveIntegerField(default=0)
+    email = models.EmailField(blank=True)
+    phone_e164 = models.CharField(max_length=30, blank=True)
+    notify_email = models.BooleanField(default=False)
+    notify_sms = models.BooleanField(default=False)
+    payload = models.JSONField()
+    received_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-occurred_at", "-id"]
+
+    def __str__(self) -> str:
+        return f"{self.event_type} ({self.event_id})"
