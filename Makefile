@@ -47,7 +47,19 @@ superuser:
 	@$(PYTHON) manage.py createsuperuser
 
 dev:
-	@$(PYTHON) manage.py runserver 0.0.0.0:$(PORTFOLIO_BFF_PORT)
+	@PORT=$${PORTFOLIO_BFF_PORT:-$(PORTFOLIO_BFF_PORT)}; \
+	if command -v lsof >/dev/null 2>&1; then \
+		if lsof -iTCP -sTCP:LISTEN -P | grep -q ":$${PORT} "; then \
+			echo "Port $${PORT} is already in use. Stop the conflicting process or set PORTFOLIO_BFF_PORT explicitly."; \
+			exit 1; \
+		fi; \
+	elif command -v ss >/dev/null 2>&1; then \
+		if ss -ltn | awk '{print $$4}' | grep -q ":$${PORT}$$"; then \
+			echo "Port $${PORT} is already in use. Stop the conflicting process or set PORTFOLIO_BFF_PORT explicitly."; \
+			exit 1; \
+		fi; \
+	fi; \
+	$(PYTHON) manage.py runserver 0.0.0.0:$(PORTFOLIO_BFF_PORT)
 
 docker-build:
 	@docker compose build
