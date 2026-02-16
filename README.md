@@ -17,16 +17,19 @@ Canonical system-wide architecture decisions and rationale live in the
 ## API Endpoints (JSON only)
 
 - `GET /api/portfolio-content`
+- `GET /api/projects`
 - `GET /projects/{project}` (lookup by `id` or `slug`)
 
-The API serves content from `content/data/portfolio-content.json`.
+The API serves content from the database. Initial content can be seeded from
+`content/data/portfolio-content.json`.
 
 ## Quickstart (local)
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install django
+pip install -r requirements.txt
 python manage.py migrate
+python manage.py seed_portfolio_content --reset
 python manage.py createsuperuser
 python manage.py runserver
 ```
