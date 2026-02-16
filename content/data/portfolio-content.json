@@ -1,0 +1,127 @@
+{
+  "site": {
+    "name": "Portfolio",
+    "displayName": "Your Name",
+    "contactEmail": "hello@example.com"
+  },
+  "projects": [
+    {
+      "id": 1,
+      "slug": "contact-meeting-scheduler",
+      "title": "Contact/meeting scheduler",
+      "description": "I made a completely custom built RESTful API that has been seemlessly integrated into my portfolio site (The portfolio site itself is only a simple Next.JS application).  Many of the features include SMS/email notifications, appointment management, Google calendar syncing, and much more all wrapped up in a django-admin overridden dashboard for easy management.",
+      "tags": ["JS/React/Next.js", "Python/Django/DRF", "SQL/PostgreSQL", "3rd Party API's (Twilio, SendGrid, Google Calendar/oAuth)", "HTML/CSS/Templates"],
+      "link": "/contact",
+      "github": "#"
+    },
+    {
+      "id": 2,
+      "slug": "grocery-list-app",
+      "title": "Grocery list app",
+      "description": "A full stack application that allows users to create and manage their grocery lists with ease. Features include user authentication, invites/collaboration, and AI-powered list and item additions using Gemini-4 integrations.  As an additional challenge, the target user base was designed to be elderly individuals, so the UI/UX was tailored to be extremely simple and accessible.",
+      "tags": ["JS/React/Next.js", "Python/Django/DRF", "SQL/PostgreSQL", "AI/Gemini-4 Integration"],
+      "link": "#",
+      "github": "#"
+    },
+    {
+      "id": 3,
+      "slug": "analytics-dashboard",
+      "title": "Analytics Dashboard",
+      "description": "Data visualization dashboard with real-time analytics and comprehensive reporting features. Built with high performance and responsiveness in mind.",
+      "tags": ["Next.js", "Chart.js", "TypeScript", "GraphQL"],
+      "link": "#",
+      "github": "#"
+    },
+    {
+      "id": 4,
+      "slug": "social-media-clone",
+      "title": "Social Media Clone",
+      "description": "Social platform with user authentication, feed, messaging, and media sharing capabilities. Includes notification system and real-time updates.",
+      "tags": ["MERN", "Socket.io", "MongoDB", "Redux"],
+      "link": "#",
+      "github": "#"
+    },
+    {
+      "id": 5,
+      "slug": "weather-application",
+      "title": "Weather Application",
+      "description": "Weather app with real-time forecasts, location services, and detailed weather analytics. Responsive design with beautiful UI/UX.",
+      "tags": ["React", "OpenWeather API", "Geolocation", "Tailwind CSS"],
+      "link": "#",
+      "github": "#"
+    },
+    {
+      "id": 6,
+      "slug": "blog-platform",
+      "title": "Blog Platform",
+      "description": "Modern blogging platform with CMS, markdown support, and SEO optimization. Features include user accounts, comments, and analytics.",
+      "tags": ["Next.js", "Contentful", "TypeScript", "SEO"],
+      "link": "#",
+      "github": "#"
+    }
+  ],
+  "stats": [
+    {
+      "number": "10+",
+      "label": "Projects Built",
+      "icon": "🚀"
+    },
+    {
+      "number": "10+",
+      "label": "Happy Clients",
+      "icon": "😊"
+    },
+    {
+      "number": "3+",
+      "label": "Years Experience",
+      "icon": "⏳"
+    }
+  ],
+  "skills": [
+    "Python/Flask/Django",
+    "Node/Express",
+    "SQL/MySQL/PostgreSQL",
+    "Docker/Kubernetes/Nginx",
+    "JSX/React/Next.JS",
+    "HTML/CSS/Tailwind",
+    "VCS/git/github/gitlab",
+    "Headless/RESTful API's"
+  ],
+  "socialLinks": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com",
+      "icon": "github"
+    },
+    {
+      "name": "LinkedIn",
+      "url": "https://linkedin.com",
+      "icon": "linkedin"
+    },
+    {
+      "name": "Twitter",
+      "url": "https://twitter.com",
+      "icon": "twitter"
+    }
+  ],
+  "contactLinks": [
+    {
+      "icon": "📧",
+      "title": "Email",
+      "description": "hello@example.com",
+      "href": "mailto:hello@example.com"
+    },
+    {
+      "icon": "💼",
+      "title": "LinkedIn",
+      "description": "linkedin.com/in/yourname",
+      "href": "https://linkedin.com"
+    },
+    {
+      "icon": "🐙",
+      "title": "GitHub",
+      "description": "github.com/yourname",
+      "href": "https://github.com"
+    }
+  ]
+}

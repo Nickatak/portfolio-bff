@@ -14,6 +14,13 @@ Canonical system-wide architecture decisions and rationale live in the
 - Provides a clean API surface for the frontend
 - Serves as a base for a custom dashboard UI
 
+## API Endpoints (JSON only)
+
+- `GET /api/portfolio-content`
+- `GET /projects/{project}` (lookup by `id` or `slug`)
+
+The API serves content from `content/data/portfolio-content.json`.
+
 ## Quickstart (local)
 ```bash
 python3 -m venv .venv
