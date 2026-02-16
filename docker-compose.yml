@@ -1,0 +1,9 @@
+name: portfolio-bff
+
+services:
+  bff:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${PORTFOLIO_BFF_PORT:-8001}:8000"
