@@ -23,6 +23,20 @@ Canonical system-wide architecture decisions and rationale live in the
 The API serves content from the database. Initial content can be seeded from
 `content/data/portfolio-content.json`.
 
+## Database (MySQL)
+
+The BFF uses MySQL for all environments.
+
+Required env vars:
+- `DB_NAME` (default `portfolio_bff`)
+- `DB_USER` (default `portfolio`)
+- `DB_PASSWORD` (default `portfolio`)
+- `DB_HOST` (default `127.0.0.1` for local, `mysql` in Docker)
+- `DB_PORT` (default `3306`)
+
+Docker MySQL uses:
+- `DB_ROOT_PASSWORD` (default `portfolio`)
+
 ## Kafka Consumer (appointments.created)
 
 The BFF includes a Kafka consumer that persists appointment events into the
@@ -52,6 +66,8 @@ Consumer env vars:
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+docker compose up -d mysql
+export DB_HOST=127.0.0.1
 python manage.py migrate
 python manage.py seed_portfolio_content --reset
 python manage.py createsuperuser

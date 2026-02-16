@@ -1,14 +1,36 @@
 name: portfolio-bff
 
 services:
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "${PORTFOLIO_BFF_DB_PORT:-3306}:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_NAME:-portfolio_bff}
+      MYSQL_USER: ${DB_USER:-portfolio}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-portfolio}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-portfolio}
+    volumes:
+      - mysql_data:/var/lib/mysql
+
   bff:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "${PORTFOLIO_BFF_PORT:-8001}:8000"
-    volumes:
-      - ./db.sqlite3:/app/db.sqlite3
+    depends_on:
+      - mysql
+    environment:
+      DB_NAME: ${DB_NAME:-portfolio_bff}
+      DB_USER: ${DB_USER:-portfolio}
+      DB_PASSWORD: ${DB_PASSWORD:-portfolio}
+      DB_HOST: ${DB_HOST:-mysql}
+      DB_PORT: ${DB_PORT:-3306}
+    networks:
+      default:
+        aliases:
+          - portfolio-bff
 
   consumer:
     build:
@@ -17,17 +39,27 @@ services:
     command: ["sh", "-c", "python manage.py migrate && python manage.py consume_appointments"]
     depends_on:
       - bff
+      - mysql
     environment:
+      DB_NAME: ${DB_NAME:-portfolio_bff}
+      DB_USER: ${DB_USER:-portfolio}
+      DB_PASSWORD: ${DB_PASSWORD:-portfolio}
+      DB_HOST: ${DB_HOST:-mysql}
+      DB_PORT: ${DB_PORT:-3306}
       KAFKA_BOOTSTRAP_SERVERS: ${KAFKA_BOOTSTRAP_SERVERS:-kafka:19092}
       KAFKA_TOPIC_APPOINTMENTS_CREATED: ${KAFKA_TOPIC_APPOINTMENTS_CREATED:-appointments.created}
       KAFKA_CONSUMER_GROUP: ${KAFKA_CONSUMER_GROUP:-portfolio-bff}
       KAFKA_AUTO_OFFSET_RESET: ${KAFKA_AUTO_OFFSET_RESET:-latest}
-    volumes:
-      - ./db.sqlite3:/app/db.sqlite3
     networks:
       - notifier
+      - default
 
 networks:
+  default:
+    name: portfolio_net
   notifier:
     external: true
     name: notifier_service_default
+
+volumes:
+  mysql_data:
