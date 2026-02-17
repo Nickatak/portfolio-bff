@@ -76,6 +76,11 @@ python manage.py runserver
 
 Admin: `http://127.0.0.1:8000/admin/`
 
+Kafka consumer (separate process):
+```bash
+python manage.py consume_appointments
+```
+
 ## Docker
 
 Build and run with Docker Compose:
