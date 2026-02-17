@@ -5,7 +5,7 @@ Backend-for-Frontend service for the portfolio site.
 ## Portfolio Stack Description
 
 Canonical system-wide architecture decisions and rationale live in the
-`portfolio` repo:
+`portfolio-frontend` repo:
 
 `../portfolio-frontend/docs/architecture/repository-structure.md`
 
