@@ -7,7 +7,7 @@ Backend-for-Frontend service for the portfolio site.
 Canonical system-wide architecture decisions and rationale live in the
 `portfolio` repo:
 
-`../portfolio/docs/architecture/repository-structure.md`
+`../portfolio-frontend/docs/architecture/repository-structure.md`
 
 ## Purpose
 - Owns editable content and settings
