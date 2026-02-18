@@ -33,6 +33,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD:-portfolio}
       DB_HOST: ${DB_HOST:-mysql}
       DB_PORT: ${DB_PORT:-3306}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1,portfolio-bff}
       BFF_DEV_SUPERUSER_USERNAME: ${BFF_DEV_SUPERUSER_USERNAME:-test@ex.com}
       BFF_DEV_SUPERUSER_EMAIL: ${BFF_DEV_SUPERUSER_EMAIL:-admin@example.com}
       BFF_DEV_SUPERUSER_PASSWORD: ${BFF_DEV_SUPERUSER_PASSWORD:-Qweqwe123}

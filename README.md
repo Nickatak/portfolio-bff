@@ -33,6 +33,7 @@ Required env vars:
 - `DB_PASSWORD` (default `portfolio`)
 - `DB_HOST` (default `127.0.0.1` for local, `mysql` in Docker)
 - `DB_PORT` (default `3306`)
+- `ALLOWED_HOSTS` (default `localhost,127.0.0.1,portfolio-bff`)
 
 Docker MySQL uses:
 - `DB_ROOT_PASSWORD` (default `portfolio`)
