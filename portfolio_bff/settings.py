@@ -36,6 +36,16 @@ if allowed_hosts_raw.strip() == "*":
 else:
     ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_raw.split(",") if host.strip()]
 
+csrf_trusted_raw = os.getenv("CSRF_TRUSTED_ORIGINS", "")
+if csrf_trusted_raw.strip():
+    CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in csrf_trusted_raw.split(",") if origin.strip()]
+
+if os.getenv("USE_X_FORWARDED_HOST", "").strip().lower() in {"1", "true", "yes"}:
+    USE_X_FORWARDED_HOST = True
+
+if os.getenv("USE_X_FORWARDED_PROTO", "").strip().lower() in {"1", "true", "yes"}:
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 
 # Application definition
 
