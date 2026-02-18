@@ -12,6 +12,11 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-portfolio}
     volumes:
       - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -p$${MYSQL_ROOT_PASSWORD} --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
 
   bff:
     build:
@@ -20,13 +25,23 @@ services:
     ports:
       - "${PORTFOLIO_BFF_PORT:-8001}:8000"
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     environment:
       DB_NAME: ${DB_NAME:-portfolio_bff}
       DB_USER: ${DB_USER:-portfolio}
       DB_PASSWORD: ${DB_PASSWORD:-portfolio}
       DB_HOST: ${DB_HOST:-mysql}
       DB_PORT: ${DB_PORT:-3306}
+    command:
+      - sh
+      - -c
+      - |
+          until python manage.py migrate; do
+            echo "waiting for mysql..."
+            sleep 1
+          done
+          python manage.py runserver 0.0.0.0:8000
     networks:
       default:
         aliases:
@@ -36,10 +51,18 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["sh", "-c", "python manage.py migrate && python manage.py consume_appointments"]
+    command:
+      - sh
+      - -c
+      - |
+          until python manage.py migrate; do
+            echo "waiting for mysql..."
+            sleep 1
+          done
+          python manage.py consume_appointments
     depends_on:
-      - bff
-      - mysql
+      mysql:
+        condition: service_healthy
     environment:
       DB_NAME: ${DB_NAME:-portfolio_bff}
       DB_USER: ${DB_USER:-portfolio}
