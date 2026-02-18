@@ -52,9 +52,9 @@ function Section({ title, items }: SectionProps) {
         }
         pre {
           margin: 0;
-          background: #0f1525;
-          border: 1px solid rgba(113, 144, 204, 0.22);
-          color: #bbd4ff;
+          background: #0d0d0d;
+          border: 1px solid var(--brand-soft-border);
+          color: #ffeddc;
           padding: 12px;
           border-radius: 10px;
           overflow: auto;

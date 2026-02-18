@@ -1,8 +1,9 @@
 import './globals.css';
+import { APP_DESCRIPTION, APP_NAME } from '@/lib/branding';
 
 export const metadata = {
-  title: 'Portfolio Admin',
-  description: 'Admin UI for portfolio content and appointments.',
+  title: APP_NAME,
+  description: APP_DESCRIPTION,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

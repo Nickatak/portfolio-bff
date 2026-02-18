@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { fetchSession, getCsrfToken, loginAdmin } from "@/lib/api";
+import { APP_NAME } from "@/lib/branding";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -41,7 +42,7 @@ export default function LoginPage() {
   return (
     <main className="login">
       <div className="login-card">
-        <h1>Portfolio Admin</h1>
+        <h1>{APP_NAME}</h1>
         <p>Sign in to manage site content and appointments.</p>
         <form onSubmit={handleSubmit}>
           <label>
@@ -104,7 +105,7 @@ export default function LoginPage() {
           display: grid;
           gap: 8px;
           font-weight: 600;
-          color: #c8d3ef;
+          color: var(--text);
         }
         input {
           padding: 12px 14px;
@@ -116,22 +117,23 @@ export default function LoginPage() {
         }
         input:focus {
           border-color: var(--brand);
-          box-shadow: 0 0 0 3px rgba(95, 180, 255, 0.18);
+          box-shadow: 0 0 0 3px var(--focus-ring);
         }
         .error {
-          background: rgba(255, 111, 127, 0.1);
-          border: 1px solid rgba(255, 111, 127, 0.3);
-          color: #ffacb6;
+          background: var(--danger-soft);
+          border: 1px solid var(--danger);
+          color: #ffe3e7;
           padding: 10px 12px;
           border-radius: 8px;
-          font-size: 14px;
+          font-size: 15px;
+          font-weight: 600;
         }
         button {
           border: none;
           border-radius: 10px;
           padding: 12px 16px;
           background: linear-gradient(135deg, var(--brand), var(--brand-strong));
-          color: #08111d;
+          color: var(--on-brand);
           font-weight: 600;
           cursor: pointer;
           transition: transform 120ms ease, filter 120ms ease;

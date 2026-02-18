@@ -95,14 +95,15 @@ export default function AppointmentsPage() {
           padding: 4px 8px;
           margin-right: 6px;
           border-radius: 999px;
-          background: rgba(95, 180, 255, 0.12);
-          color: #92a7d1;
-          border: 1px solid rgba(95, 180, 255, 0.22);
-          font-size: 12px;
+          background: var(--brand-soft);
+          color: #f5dfcb;
+          border: 1px solid var(--brand-soft-border);
+          font-size: 13px;
+          font-weight: 600;
         }
         .pill.on {
           background: linear-gradient(135deg, var(--brand), var(--brand-strong));
-          color: #08111d;
+          color: var(--on-brand);
           border-color: transparent;
         }
         .empty {

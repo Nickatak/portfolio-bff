@@ -33,7 +33,7 @@ export default function DashboardPage() {
 
   return (
     <main>
-      <h1>Admin Overview</h1>
+      <h1>Dashboard Overview</h1>
       <p>Quick glance at live content and recent appointments.</p>
       <div className="grid">
         {Object.entries(contentCounts).map(([label, value]) => (

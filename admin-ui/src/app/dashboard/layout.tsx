@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { fetchSession, logoutAdmin } from "@/lib/api";
+import { APP_INITIALS, APP_NAME } from "@/lib/branding";
 
 const navLinks = [
   { href: "/dashboard", label: "Overview" },
@@ -58,9 +59,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <div className="layout">
       <aside>
         <div className="brand">
-          <div className="logo">PB</div>
+          <div className="logo">{APP_INITIALS}</div>
           <div>
-            <strong>Portfolio Admin</strong>
+            <strong>{APP_NAME}</strong>
             <span>{username ?? "Admin"}</span>
           </div>
         </div>
@@ -87,7 +88,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           min-height: 100vh;
         }
         aside {
-          background: rgba(9, 14, 25, 0.86);
+          background: rgba(10, 10, 10, 0.88);
           color: var(--text);
           padding: 24px;
           display: flex;
@@ -106,7 +107,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           height: 40px;
           border-radius: 12px;
           background: linear-gradient(135deg, var(--brand), var(--brand-strong));
-          color: #09121f;
+          color: var(--on-brand);
           display: grid;
           place-items: center;
           font-weight: 700;
@@ -125,19 +126,19 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           padding: 10px 12px;
           border-radius: 10px;
           background: transparent;
-          color: #bfcae6;
-          border: 1px solid transparent;
+          color: var(--text);
+          border: 1px solid rgba(201, 171, 143, 0.22);
           transition: background 140ms ease, border-color 140ms ease;
         }
         nav a.active,
         nav a:hover {
-          background: rgba(95, 180, 255, 0.12);
-          border-color: rgba(95, 180, 255, 0.28);
+          background: var(--brand-soft);
+          border-color: var(--brand-soft-border);
           color: var(--text);
         }
         .logout {
           margin-top: auto;
-          background: rgba(255, 255, 255, 0.06);
+          background: rgba(255, 255, 255, 0.12);
           border: 1px solid var(--border);
           color: var(--text);
           padding: 10px 12px;
@@ -146,7 +147,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           transition: background 140ms ease;
         }
         .logout:hover {
-          background: rgba(255, 255, 255, 0.1);
+          background: rgba(255, 255, 255, 0.2);
         }
         section {
           padding: 32px;
