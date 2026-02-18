@@ -10,7 +10,7 @@ Full stack instructions live in the parent stack repo: `../README.md`.
 - Serves portfolio content to the frontend.
 - Persists appointment events consumed from Kafka.
 - Provides the data layer for a future dashboard UI.
- - Includes a Next.js admin UI (in `admin-ui/`) backed by JSON admin endpoints.
+- Includes a Next.js admin UI (in `admin-ui/`) backed by JSON admin endpoints.
 
 ## Dependencies
 
