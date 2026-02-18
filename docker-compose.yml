@@ -59,8 +59,8 @@ services:
       - sh
       - -c
       - |
-          until python manage.py migrate; do
-            echo "waiting for mysql..."
+          until python manage.py migrate --check; do
+            echo "waiting for migrations..."
             sleep 1
           done
           python manage.py consume_appointments
