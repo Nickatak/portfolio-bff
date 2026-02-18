@@ -84,6 +84,23 @@ services:
       - notifier
       - default
 
+  admin-ui:
+    image: node:20-alpine
+    working_dir: /app
+    command:
+      - sh
+      - -c
+      - npm ci && npm run dev -- --hostname 0.0.0.0
+    ports:
+      - "${PORTFOLIO_BFF_ADMIN_UI_PORT:-3001}:3001"
+    environment:
+      NEXT_PUBLIC_BFF_BASE_URL: ${NEXT_PUBLIC_BFF_ADMIN_BFF_BASE_URL:-http://localhost:8001}
+    volumes:
+      - ./admin-ui:/app
+      - admin_ui_node_modules:/app/node_modules
+    networks:
+      - default
+
 networks:
   default:
     name: portfolio_net
@@ -93,3 +110,4 @@ networks:
 
 volumes:
   mysql_data:
+  admin_ui_node_modules:

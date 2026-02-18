@@ -61,6 +61,10 @@ so we avoid migration races when the BFF container is still booting.
 docker compose up --build
 ```
 
+This starts MySQL, the BFF API, Kafka consumer, and the Next.js admin UI.
+Default admin UI URL: `http://localhost:3001`
+Port `3001` is reserved for the admin UI in this stack.
+
 ## Admin UI (Next.js)
 
 Local dev:
@@ -70,8 +74,17 @@ npm install
 npm run dev
 ```
 
+If Docker previously wrote root-owned files in `admin-ui/`, run:
+```bash
+make admin-fix-perms
+```
+
 The admin UI expects the BFF to be running and defaults to
 `NEXT_PUBLIC_BFF_BASE_URL=http://localhost:8001`. Override as needed.
+
+Docker env overrides:
+- `PORTFOLIO_BFF_ADMIN_UI_PORT` (default `3001`)
+- `NEXT_PUBLIC_BFF_BASE_URL` via compose var `PORTFOLIO_BFF_ADMIN_BFF_BASE_URL`
 
 ## Environment Variables
 
@@ -130,3 +143,4 @@ Defaults (override via env vars):
 ## Ports
 
 - BFF API: `8001` (host) -> `8000` (container)
+- BFF Admin UI: `3001` (host) -> `3001` (container, reserved)

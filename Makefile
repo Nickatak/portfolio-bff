@@ -6,7 +6,7 @@ PIP := $(VENV_DIR)/bin/pip
 PORTFOLIO_BFF_PORT ?= 8001
 
 .PHONY: help venv install dev migrate seed superuser \
-	admin-install admin-dev admin-build admin-lint \
+	admin-fix-perms admin-install admin-dev admin-build admin-lint \
 	db-up db-down \
 	docker-build docker-up docker-down docker-logs
 
@@ -23,6 +23,7 @@ help:
 	@echo "  make dev            Run Django dev server"
 	@echo ""
 	@echo "Admin UI (Next.js):"
+	@echo "  make admin-fix-perms Fix admin-ui/node_modules ownership for local npm use"
 	@echo "  make admin-install  Install admin UI deps"
 	@echo "  make admin-dev      Run admin UI dev server (port 3001)"
 	@echo "  make admin-build    Build admin UI"
@@ -68,7 +69,13 @@ dev:
 	fi; \
 	$(PYTHON) manage.py runserver 0.0.0.0:$(PORTFOLIO_BFF_PORT)
 
-admin-install:
+admin-fix-perms:
+	@if find admin-ui -maxdepth 3 -user root | grep -q .; then \
+		echo "admin-ui has root-owned files; fixing ownership via Docker..."; \
+		docker run --rm -v "$(CURDIR)/admin-ui:/app" alpine:3.20 sh -c "chown -R $$(id -u):$$(id -g) /app"; \
+	fi
+
+admin-install: admin-fix-perms
 	@cd admin-ui && npm install
 
 admin-dev:
