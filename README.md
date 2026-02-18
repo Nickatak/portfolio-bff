@@ -10,6 +10,7 @@ Full stack instructions live in the parent stack repo: `../README.md`.
 - Serves portfolio content to the frontend.
 - Persists appointment events consumed from Kafka.
 - Provides the data layer for a future dashboard UI.
+ - Includes a Next.js admin UI (in `admin-ui/`) backed by JSON admin endpoints.
 
 ## Dependencies
 
@@ -41,7 +42,10 @@ python manage.py seed_portfolio_content --reset
 python manage.py runserver
 ```
 
-Admin: `http://127.0.0.1:8000/admin/`
+Admin UI (Next.js): `http://localhost:3001`
+
+Note: the Django admin route is disabled by default. Set `ENABLE_DJANGO_ADMIN=true`
+if you need it locally.
 
 Kafka consumer (separate process):
 ```bash
@@ -57,6 +61,18 @@ so we avoid migration races when the BFF container is still booting.
 docker compose up --build
 ```
 
+## Admin UI (Next.js)
+
+Local dev:
+```bash
+cd admin-ui
+npm install
+npm run dev
+```
+
+The admin UI expects the BFF to be running and defaults to
+`NEXT_PUBLIC_BFF_BASE_URL=http://localhost:8001`. Override as needed.
+
 ## Environment Variables
 
 Database (MySQL):
@@ -70,6 +86,8 @@ Required env vars:
 - `DB_HOST` (default `127.0.0.1` for local, `mysql` in Docker)
 - `DB_PORT` (default `3306`)
 - `ALLOWED_HOSTS` (default `localhost,127.0.0.1,portfolio-bff`)
+- `ADMIN_UI_ORIGINS` (default `http://localhost:3001`)
+- `ENABLE_DJANGO_ADMIN` (default `false`)
 
 Docker MySQL uses:
 - `DB_ROOT_PASSWORD` (default `portfolio`)

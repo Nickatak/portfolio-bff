@@ -6,6 +6,7 @@ PIP := $(VENV_DIR)/bin/pip
 PORTFOLIO_BFF_PORT ?= 8001
 
 .PHONY: help venv install dev migrate seed superuser \
+	admin-install admin-dev admin-build admin-lint \
 	db-up db-down \
 	docker-build docker-up docker-down docker-logs
 
@@ -20,6 +21,12 @@ help:
 	@echo "  make seed           Seed portfolio content"
 	@echo "  make superuser      Create Django superuser"
 	@echo "  make dev            Run Django dev server"
+	@echo ""
+	@echo "Admin UI (Next.js):"
+	@echo "  make admin-install  Install admin UI deps"
+	@echo "  make admin-dev      Run admin UI dev server (port 3001)"
+	@echo "  make admin-build    Build admin UI"
+	@echo "  make admin-lint     Lint admin UI"
 	@echo ""
 	@echo "Docker:"
 	@echo "  make docker-build   Build images"
@@ -60,6 +67,18 @@ dev:
 		fi; \
 	fi; \
 	$(PYTHON) manage.py runserver 0.0.0.0:$(PORTFOLIO_BFF_PORT)
+
+admin-install:
+	@cd admin-ui && npm install
+
+admin-dev:
+	@cd admin-ui && npm run dev
+
+admin-build:
+	@cd admin-ui && npm run build
+
+admin-lint:
+	@cd admin-ui && npm run lint
 
 docker-build:
 	@docker compose build

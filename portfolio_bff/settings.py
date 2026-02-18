@@ -30,6 +30,11 @@ SECRET_KEY = "django-insecure-!r6mj@*re_eys6(2@2r1zvts1qa&clomteb-%0cq7af&bl%q^r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+ENABLE_DJANGO_ADMIN = os.getenv("ENABLE_DJANGO_ADMIN", "").strip().lower() in {"1", "true", "yes"}
+
+admin_ui_origins_raw = os.getenv("ADMIN_UI_ORIGINS", "http://localhost:3001")
+ADMIN_UI_ORIGINS = [origin.strip() for origin in admin_ui_origins_raw.split(",") if origin.strip()]
+
 allowed_hosts_raw = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,portfolio-bff")
 if allowed_hosts_raw.strip() == "*":
     ALLOWED_HOSTS = ["*"]
