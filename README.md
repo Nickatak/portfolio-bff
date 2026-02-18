@@ -46,6 +46,9 @@ Kafka consumer (separate process):
 python manage.py consume_appointments
 ```
 
+Note: the Docker consumer waits for migrations to be applied before starting,
+so we avoid migration races when the BFF container is still booting.
+
 ## Docker Development
 
 ```bash
