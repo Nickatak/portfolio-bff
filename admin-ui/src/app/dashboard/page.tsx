@@ -49,7 +49,7 @@ export default function DashboardPage() {
         }
         p {
           margin: 0 0 24px;
-          color: #5a5f73;
+          color: var(--text-muted);
         }
         .grid {
           display: grid;
@@ -57,21 +57,24 @@ export default function DashboardPage() {
           grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         }
         .card {
-          background: white;
+          background: var(--surface);
+          border: 1px solid var(--border);
           border-radius: 12px;
           padding: 16px;
-          box-shadow: 0 10px 30px rgba(20, 22, 34, 0.08);
+          box-shadow: var(--shadow);
+          animation: rise-in 220ms ease-out;
         }
         .label {
           font-size: 12px;
           text-transform: uppercase;
           letter-spacing: 0.08em;
-          color: #7b8094;
+          color: var(--text-muted);
         }
         strong {
           display: block;
           margin-top: 8px;
           font-size: 24px;
+          color: var(--text);
         }
       `}</style>
     </main>

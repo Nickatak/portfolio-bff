@@ -1,4 +1,5 @@
-const API_BASE = process.env.NEXT_PUBLIC_BFF_BASE_URL || 'http://localhost:8001';
+const RAW_API_BASE = process.env.NEXT_PUBLIC_BFF_BASE_URL ?? '';
+const API_BASE = RAW_API_BASE.trim().replace(/\/+$/, '');
 
 type JsonValue = Record<string, unknown>;
 
@@ -33,16 +34,27 @@ function getCookieValue(name: string): string | null {
   return decodeURIComponent(match.split('=')[1] ?? '');
 }
 
+function buildApiUrl(path: string): string {
+  if (/^https?:\/\//i.test(path)) {
+    return path;
+  }
+  return API_BASE ? `${API_BASE}${path}` : path;
+}
+
 export async function getCsrfToken(): Promise<string | null> {
-  const response = await fetch(`${API_BASE}/api/admin/csrf`, {
-    method: 'GET',
-    credentials: 'include',
-  });
-  if (!response.ok) {
+  try {
+    const response = await fetch(buildApiUrl('/api/admin/csrf'), {
+      method: 'GET',
+      credentials: 'include',
+    });
+    if (!response.ok) {
+      return null;
+    }
+    const data = (await response.json()) as { csrfToken?: string };
+    return data.csrfToken ?? null;
+  } catch {
     return null;
   }
-  const data = (await response.json()) as { csrfToken?: string };
-  return data.csrfToken ?? null;
 }
 
 async function apiFetch<T = JsonValue>(
@@ -62,11 +74,24 @@ async function apiFetch<T = JsonValue>(
     }
   }
 
-  const response = await fetch(`${API_BASE}${path}`, {
-    ...options,
-    headers,
-    credentials: 'include',
-  });
+  let response: Response;
+  try {
+    response = await fetch(buildApiUrl(path), {
+      ...options,
+      headers,
+      credentials: 'include',
+    });
+  } catch {
+    return {
+      ok: false,
+      status: 0,
+      errors: [
+        API_BASE
+          ? `Network error: could not reach ${API_BASE}. Check NEXT_PUBLIC_BFF_BASE_URL and ensure the BFF API is running.`
+          : "Network error: could not reach /api. Check BFF_BASE_URL rewrite target and ensure the BFF API is running.",
+      ],
+    };
+  }
 
   let data: T | undefined;
   let errors: string[] | undefined;

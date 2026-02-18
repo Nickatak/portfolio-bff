@@ -80,18 +80,21 @@ export default function LoginPage() {
         .login-card {
           width: 100%;
           max-width: 420px;
-          background: #ffffff;
-          border-radius: 16px;
+          background: var(--surface);
+          border-radius: 18px;
           padding: 32px;
-          box-shadow: 0 16px 40px rgba(20, 22, 34, 0.12);
+          box-shadow: var(--shadow);
+          border: 1px solid var(--border);
+          backdrop-filter: blur(8px);
+          animation: rise-in 220ms ease-out;
         }
         h1 {
           margin: 0 0 8px;
-          font-size: 24px;
+          font-size: 28px;
         }
         p {
           margin: 0 0 24px;
-          color: #5a5f73;
+          color: var(--text-muted);
         }
         form {
           display: grid;
@@ -101,16 +104,24 @@ export default function LoginPage() {
           display: grid;
           gap: 8px;
           font-weight: 600;
-          color: #2d3142;
+          color: #c8d3ef;
         }
         input {
           padding: 12px 14px;
           border-radius: 10px;
-          border: 1px solid #d6d9e4;
+          border: 1px solid var(--border);
+          background: var(--surface-muted);
+          color: var(--text);
+          outline: none;
+        }
+        input:focus {
+          border-color: var(--brand);
+          box-shadow: 0 0 0 3px rgba(95, 180, 255, 0.18);
         }
         .error {
-          background: #ffe7e7;
-          color: #b42318;
+          background: rgba(255, 111, 127, 0.1);
+          border: 1px solid rgba(255, 111, 127, 0.3);
+          color: #ffacb6;
           padding: 10px 12px;
           border-radius: 8px;
           font-size: 14px;
@@ -119,10 +130,15 @@ export default function LoginPage() {
           border: none;
           border-radius: 10px;
           padding: 12px 16px;
-          background: #1e2240;
-          color: #fff;
+          background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+          color: #08111d;
           font-weight: 600;
           cursor: pointer;
+          transition: transform 120ms ease, filter 120ms ease;
+        }
+        button:hover:not(:disabled) {
+          filter: brightness(1.05);
+          transform: translateY(-1px);
         }
         button:disabled {
           opacity: 0.7;

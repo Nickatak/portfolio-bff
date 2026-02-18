@@ -69,7 +69,7 @@ export default function AppointmentsPage() {
         }
         p {
           margin: 0 0 24px;
-          color: #5a5f73;
+          color: var(--text-muted);
         }
         .table {
           display: grid;
@@ -80,12 +80,14 @@ export default function AppointmentsPage() {
           grid-template-columns: 1.2fr 1.5fr 1fr 0.8fr;
           gap: 12px;
           padding: 16px;
-          background: white;
+          background: var(--surface);
+          border: 1px solid var(--border);
           border-radius: 12px;
-          box-shadow: 0 10px 30px rgba(20, 22, 34, 0.08);
+          box-shadow: var(--shadow);
+          animation: rise-in 220ms ease-out;
         }
         .muted {
-          color: #7b8094;
+          color: var(--text-muted);
           font-size: 12px;
         }
         .pill {
@@ -93,20 +95,23 @@ export default function AppointmentsPage() {
           padding: 4px 8px;
           margin-right: 6px;
           border-radius: 999px;
-          background: #e1e3ef;
-          color: #5a5f73;
+          background: rgba(95, 180, 255, 0.12);
+          color: #92a7d1;
+          border: 1px solid rgba(95, 180, 255, 0.22);
           font-size: 12px;
         }
         .pill.on {
-          background: #1e2240;
-          color: white;
+          background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+          color: #08111d;
+          border-color: transparent;
         }
         .empty {
-          background: white;
+          background: var(--surface);
+          border: 1px solid var(--border);
           padding: 24px;
           border-radius: 12px;
           text-align: center;
-          color: #7b8094;
+          color: var(--text-muted);
         }
         @media (max-width: 900px) {
           .row {

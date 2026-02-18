@@ -39,6 +39,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     return (
       <main>
         <div className="card">Checking session...</div>
+        <style jsx>{`
+          .card {
+            max-width: 340px;
+            margin: 28vh auto 0;
+            padding: 16px;
+            border-radius: 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+          }
+        `}</style>
       </main>
     );
   }
@@ -76,12 +87,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           min-height: 100vh;
         }
         aside {
-          background: #111427;
-          color: #f0f1f5;
+          background: rgba(9, 14, 25, 0.86);
+          color: var(--text);
           padding: 24px;
           display: flex;
           flex-direction: column;
           gap: 24px;
+          border-right: 1px solid var(--border);
+          backdrop-filter: blur(8px);
         }
         .brand {
           display: flex;
@@ -92,7 +105,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           width: 40px;
           height: 40px;
           border-radius: 12px;
-          background: #2f3560;
+          background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+          color: #09121f;
           display: grid;
           place-items: center;
           font-weight: 700;
@@ -100,7 +114,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         .brand span {
           display: block;
           font-size: 12px;
-          color: #9aa0c4;
+          color: var(--text-muted);
           margin-top: 4px;
         }
         nav {
@@ -111,39 +125,50 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           padding: 10px 12px;
           border-radius: 10px;
           background: transparent;
-          color: inherit;
+          color: #bfcae6;
+          border: 1px solid transparent;
+          transition: background 140ms ease, border-color 140ms ease;
         }
         nav a.active,
         nav a:hover {
-          background: #1e2240;
+          background: rgba(95, 180, 255, 0.12);
+          border-color: rgba(95, 180, 255, 0.28);
+          color: var(--text);
         }
         .logout {
           margin-top: auto;
-          background: #2f3560;
-          border: none;
-          color: white;
+          background: rgba(255, 255, 255, 0.06);
+          border: 1px solid var(--border);
+          color: var(--text);
           padding: 10px 12px;
           border-radius: 10px;
           cursor: pointer;
+          transition: background 140ms ease;
+        }
+        .logout:hover {
+          background: rgba(255, 255, 255, 0.1);
         }
         section {
           padding: 32px;
+          animation: rise-in 220ms ease-out;
         }
         @media (max-width: 900px) {
           .layout {
             grid-template-columns: 1fr;
           }
           aside {
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
+            display: grid;
+            gap: 14px;
+            border-right: none;
+            border-bottom: 1px solid var(--border);
           }
           nav {
             display: flex;
             gap: 8px;
+            overflow: auto;
           }
           .logout {
-            margin-top: 0;
+            margin-top: 4px;
           }
         }
       `}</style>

@@ -8,6 +8,16 @@ type SectionProps = {
   items: unknown[];
 };
 
+type ContentData = {
+  settings: unknown[];
+  pages: unknown[];
+  projects: unknown[];
+  stats: unknown[];
+  skills: unknown[];
+  socialLinks: unknown[];
+  contactLinks: unknown[];
+};
+
 function Section({ title, items }: SectionProps) {
   return (
     <div className="section">
@@ -18,10 +28,12 @@ function Section({ title, items }: SectionProps) {
       <pre>{JSON.stringify(items, null, 2)}</pre>
       <style jsx>{`
         .section {
-          background: white;
+          background: var(--surface);
+          border: 1px solid var(--border);
           border-radius: 12px;
           padding: 16px;
-          box-shadow: 0 10px 30px rgba(20, 22, 34, 0.08);
+          box-shadow: var(--shadow);
+          animation: rise-in 220ms ease-out;
         }
         header {
           display: flex;
@@ -33,14 +45,16 @@ function Section({ title, items }: SectionProps) {
           margin: 0;
         }
         span {
-          color: #7b8094;
+          color: var(--text-muted);
           font-size: 12px;
           text-transform: uppercase;
           letter-spacing: 0.08em;
         }
         pre {
           margin: 0;
-          background: #f5f6fb;
+          background: #0f1525;
+          border: 1px solid rgba(113, 144, 204, 0.22);
+          color: #bbd4ff;
           padding: 12px;
           border-radius: 10px;
           overflow: auto;
@@ -51,7 +65,7 @@ function Section({ title, items }: SectionProps) {
 }
 
 export default function ContentPage() {
-  const [data, setData] = useState({
+  const [data, setData] = useState<ContentData>({
     settings: [],
     pages: [],
     projects: [],
@@ -103,7 +117,7 @@ export default function ContentPage() {
         }
         p {
           margin: 0 0 24px;
-          color: #5a5f73;
+          color: var(--text-muted);
         }
         .grid {
           display: grid;

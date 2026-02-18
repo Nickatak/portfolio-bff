@@ -80,11 +80,13 @@ make admin-fix-perms
 ```
 
 The admin UI expects the BFF to be running and defaults to
-`NEXT_PUBLIC_BFF_BASE_URL=http://localhost:8001`. Override as needed.
+server-side `BFF_BASE_URL=http://localhost:8001` via Next rewrites
+(`/api/* -> BFF`). This keeps client requests same-origin by default.
 
 Docker env overrides:
 - `PORTFOLIO_BFF_ADMIN_UI_PORT` (default `3001`)
-- `NEXT_PUBLIC_BFF_BASE_URL` via compose var `PORTFOLIO_BFF_ADMIN_BFF_BASE_URL`
+- `PORTFOLIO_BFF_ADMIN_BFF_BASE_URL` (default `http://bff:8000`)
+- Optional `NEXT_PUBLIC_BFF_BASE_URL` for direct client calls (normally keep empty)
 
 ## Environment Variables
 
@@ -100,6 +102,7 @@ Required env vars:
 - `DB_PORT` (default `3306`)
 - `ALLOWED_HOSTS` (default `localhost,127.0.0.1,portfolio-bff`)
 - `ADMIN_UI_ORIGINS` (default `http://localhost:3001`)
+- `CSRF_TRUSTED_ORIGINS` (default `http://localhost:3001` in Docker compose)
 - `ENABLE_DJANGO_ADMIN` (default `false`)
 
 Docker MySQL uses:
