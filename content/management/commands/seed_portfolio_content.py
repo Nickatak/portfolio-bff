@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
+from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.utils.text import slugify
@@ -100,4 +102,30 @@ class Command(BaseCommand):
                     },
                 )
 
+            self._maybe_seed_dev_superuser()
+
         self.stdout.write(self.style.SUCCESS("Seed data loaded successfully."))
+
+    def _maybe_seed_dev_superuser(self) -> None:
+        if _is_production_env():
+            return
+
+        username = os.getenv("BFF_DEV_SUPERUSER_USERNAME", "admin")
+        email = os.getenv("BFF_DEV_SUPERUSER_EMAIL", "admin@example.com")
+        password = os.getenv("BFF_DEV_SUPERUSER_PASSWORD", "admin123!")
+
+        user_model = get_user_model()
+        if user_model.objects.filter(username=username).exists():
+            self.stdout.write(self.style.WARNING(f"Dev superuser '{username}' already exists."))
+            return
+
+        user_model.objects.create_superuser(username=username, email=email, password=password)
+        self.stdout.write(self.style.SUCCESS(f"Created dev superuser '{username}'."))
+
+
+def _is_production_env() -> bool:
+    for key in ("BFF_ENV", "DJANGO_ENV", "ENVIRONMENT", "APP_ENV"):
+        value = os.getenv(key)
+        if value and value.strip().lower() in {"prod", "production"}:
+            return True
+    return False

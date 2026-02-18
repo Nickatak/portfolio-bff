@@ -70,7 +70,6 @@ docker compose up -d mysql
 export DB_HOST=127.0.0.1
 python manage.py migrate
 python manage.py seed_portfolio_content --reset
-python manage.py createsuperuser
 python manage.py runserver
 ```
 
@@ -88,3 +87,14 @@ Build and run with Docker Compose:
 ```bash
 docker compose up --build
 ```
+
+## Seeded Dev Superuser
+
+`python manage.py seed_portfolio_content` will also create a dev superuser when
+the environment is not production. Production is detected via `BFF_ENV`,
+`DJANGO_ENV`, `ENVIRONMENT`, or `APP_ENV` set to `prod`/`production`.
+
+Defaults (override via env vars):
+- `BFF_DEV_SUPERUSER_USERNAME` (default: `admin`)
+- `BFF_DEV_SUPERUSER_EMAIL` (default: `admin@example.com`)
+- `BFF_DEV_SUPERUSER_PASSWORD` (default: `admin123!`)
