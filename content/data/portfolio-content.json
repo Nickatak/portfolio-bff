@@ -78,14 +78,15 @@
     }
   ],
   "skills": [
-    "Python/Flask/Django",
-    "Node/Express",
-    "SQL/MySQL/PostgreSQL",
-    "Docker/Kubernetes/Nginx",
-    "JSX/React/Next.JS",
-    "HTML/CSS/Tailwind",
-    "VCS/git/github/gitlab",
-    "Headless/RESTful API's"
+    "TypeScript/React/Next.js",
+    "Python/Django/DRF",
+    "C#/.NET 8 (Minimal APIs)",
+    "REST API design",
+    "SQL/MySQL",
+    "Kafka (event-driven systems)",
+    "Docker/Docker Compose",
+    "Git/GitHub",
+    "Tailwind CSS"
   ],
   "socialLinks": [
     {
