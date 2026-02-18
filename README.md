@@ -95,6 +95,6 @@ the environment is not production. Production is detected via `BFF_ENV`,
 `DJANGO_ENV`, `ENVIRONMENT`, or `APP_ENV` set to `prod`/`production`.
 
 Defaults (override via env vars):
-- `BFF_DEV_SUPERUSER_USERNAME` (default: `admin`)
+- `BFF_DEV_SUPERUSER_USERNAME` (default: `test@ex.com`)
 - `BFF_DEV_SUPERUSER_EMAIL` (default: `admin@example.com`)
-- `BFF_DEV_SUPERUSER_PASSWORD` (default: `admin123!`)
+- `BFF_DEV_SUPERUSER_PASSWORD` (default: `Qweqwe123`)

@@ -110,9 +110,9 @@ class Command(BaseCommand):
         if _is_production_env():
             return
 
-        username = os.getenv("BFF_DEV_SUPERUSER_USERNAME", "admin")
+        username = os.getenv("BFF_DEV_SUPERUSER_USERNAME", "test@ex.com")
         email = os.getenv("BFF_DEV_SUPERUSER_EMAIL", "admin@example.com")
-        password = os.getenv("BFF_DEV_SUPERUSER_PASSWORD", "admin123!")
+        password = os.getenv("BFF_DEV_SUPERUSER_PASSWORD", "Qweqwe123")
 
         user_model = get_user_model()
         if user_model.objects.filter(username=username).exists():
