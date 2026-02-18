@@ -24,7 +24,9 @@ Full stack instructions live in the parent stack repo: `../README.md`.
 - `GET /projects/{project}` (lookup by `id` or `slug`)
 
 The API serves content from the database. Initial content can be seeded from
-`content/data/portfolio-content.json`.
+`content/data/portfolio-content.json`. If an ops repo exists at
+`../ntakemori-deploy/portfolio-content.json` (or `../ntakemori-deployment/...`),
+the seed command will use that file automatically.
 
 ## Local Development
 

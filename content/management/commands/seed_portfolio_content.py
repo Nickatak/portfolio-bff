@@ -11,7 +11,10 @@ from django.utils.text import slugify
 
 from content.models import ContactLink, Project, SiteSetting, Skill, SocialLink, Stat
 
-DATA_PATH = Path(__file__).resolve().parents[3] / "content" / "data" / "portfolio-content.json"
+REPO_ROOT = Path(__file__).resolve().parents[3]
+DATA_PATH = REPO_ROOT / "content" / "data" / "portfolio-content.json"
+OPS_REPO_NAMES = ("ntakemori-deploy", "ntakemori-deployment")
+OPS_SEED_FILENAME = "portfolio-content.json"
 
 SITE_NAME_KEY = "site.name"
 DISPLAY_NAME_KEY = "site.display_name"
@@ -19,7 +22,10 @@ CONTACT_EMAIL_KEY = "site.contact_email"
 
 
 class Command(BaseCommand):
-    help = "Seed portfolio content into the database from content/data/portfolio-content.json"
+    help = (
+        "Seed portfolio content into the database. Uses content/data/portfolio-content.json, "
+        "or an ops override if present."
+    )
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -29,10 +35,14 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        if not DATA_PATH.exists():
-            raise FileNotFoundError(f"Seed data not found: {DATA_PATH}")
+        data_path = _resolve_seed_path()
+        if not data_path.exists():
+            raise FileNotFoundError(f"Seed data not found: {data_path}")
 
-        with DATA_PATH.open("r", encoding="utf-8") as handle:
+        if data_path != DATA_PATH:
+            self.stdout.write(self.style.WARNING(f"Using seed override: {data_path}"))
+
+        with data_path.open("r", encoding="utf-8") as handle:
             data = json.load(handle)
 
         with transaction.atomic():
@@ -129,3 +139,20 @@ def _is_production_env() -> bool:
         if value and value.strip().lower() in {"prod", "production"}:
             return True
     return False
+
+
+def _resolve_seed_path() -> Path:
+    env_path = os.getenv("BFF_SEED_DATA_PATH")
+    if env_path:
+        candidate = Path(env_path).expanduser()
+        if candidate.is_file():
+            return candidate
+
+    bases = [REPO_ROOT.parent.parent, REPO_ROOT.parent]
+    for base in bases:
+        for repo_name in OPS_REPO_NAMES:
+            candidate = base / repo_name / OPS_SEED_FILENAME
+            if candidate.is_file():
+                return candidate
+
+    return DATA_PATH
