@@ -54,7 +54,7 @@ export default function DashboardPage() {
         .grid {
           display: grid;
           gap: 16px;
-          grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+          grid-template-columns: 1fr;
         }
         .card {
           background: var(--surface);
@@ -75,6 +75,11 @@ export default function DashboardPage() {
           margin-top: 8px;
           font-size: 24px;
           color: var(--text);
+        }
+        @media (min-width: 680px) {
+          .grid {
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+          }
         }
       `}</style>
     </main>

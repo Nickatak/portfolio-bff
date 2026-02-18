@@ -77,7 +77,7 @@ export default function AppointmentsPage() {
         }
         .row {
           display: grid;
-          grid-template-columns: 1.2fr 1.5fr 1fr 0.8fr;
+          grid-template-columns: 1fr;
           gap: 12px;
           padding: 16px;
           background: var(--surface);
@@ -114,9 +114,9 @@ export default function AppointmentsPage() {
           text-align: center;
           color: var(--text-muted);
         }
-        @media (max-width: 900px) {
+        @media (min-width: 900px) {
           .row {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1.2fr 1.5fr 1fr 0.8fr;
           }
         }
       `}</style>

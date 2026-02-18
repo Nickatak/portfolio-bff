@@ -76,14 +76,14 @@ export default function LoginPage() {
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 24px;
+          padding: 16px;
         }
         .login-card {
           width: 100%;
-          max-width: 420px;
+          max-width: 460px;
           background: var(--surface);
           border-radius: 18px;
-          padding: 32px;
+          padding: 20px;
           box-shadow: var(--shadow);
           border: 1px solid var(--border);
           backdrop-filter: blur(8px);
@@ -91,7 +91,7 @@ export default function LoginPage() {
         }
         h1 {
           margin: 0 0 8px;
-          font-size: 28px;
+          font-size: 24px;
         }
         p {
           margin: 0 0 24px;
@@ -145,6 +145,17 @@ export default function LoginPage() {
         button:disabled {
           opacity: 0.7;
           cursor: default;
+        }
+        @media (min-width: 700px) {
+          .login {
+            padding: 24px;
+          }
+          .login-card {
+            padding: 32px;
+          }
+          h1 {
+            font-size: 28px;
+          }
         }
       `}</style>
     </main>
