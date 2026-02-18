@@ -1,18 +1,21 @@
-# portfolio-bff
+# Portfolio BFF
 
-Backend-for-Frontend service for the portfolio site.
+Backend-for-Frontend service for the portfolio stack. This repo owns the API
+for portfolio content and a dashboard read model for appointment events.
 
-## Portfolio Stack Description
+Full stack instructions live in the parent stack repo: `../README.md`.
 
-Canonical system-wide architecture decisions and rationale live in the
-`portfolio-frontend` repo:
+## Role In The System
 
-`../portfolio-frontend/docs/architecture/repository-structure.md`
+- Serves portfolio content to the frontend.
+- Persists appointment events consumed from Kafka.
+- Provides the data layer for a future dashboard UI.
 
-## Purpose
-- Owns editable content and settings
-- Provides a clean API surface for the frontend
-- Serves as a base for a custom dashboard UI
+## Dependencies
+
+- Frontend: `../portfolio-frontend`
+- Calendar API (publisher): `../portfolio-calendar`
+- Notifications/Kafka: `../notifier_service`
 
 ## API Endpoints (JSON only)
 
@@ -23,7 +26,35 @@ Canonical system-wide architecture decisions and rationale live in the
 The API serves content from the database. Initial content can be seeded from
 `content/data/portfolio-content.json`.
 
-## Database (MySQL)
+## Local Development
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+docker compose up -d mysql
+export DB_HOST=127.0.0.1
+python manage.py migrate
+python manage.py seed_portfolio_content --reset
+python manage.py runserver
+```
+
+Admin: `http://127.0.0.1:8000/admin/`
+
+Kafka consumer (separate process):
+```bash
+python manage.py consume_appointments
+```
+
+## Docker Development
+
+```bash
+docker compose up --build
+```
+
+## Environment Variables
+
+Database (MySQL):
 
 The BFF uses MySQL for all environments.
 
@@ -38,7 +69,7 @@ Required env vars:
 Docker MySQL uses:
 - `DB_ROOT_PASSWORD` (default `portfolio`)
 
-## Kafka Consumer (appointments.created)
+Kafka consumer:
 
 The BFF includes a Kafka consumer that persists appointment events into the
 database for the dashboard.
@@ -62,33 +93,6 @@ Consumer env vars:
 - `KAFKA_CONSUMER_GROUP` (default `portfolio-bff`)
 - `KAFKA_AUTO_OFFSET_RESET` (default `latest`)
 
-## Quickstart (local)
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-docker compose up -d mysql
-export DB_HOST=127.0.0.1
-python manage.py migrate
-python manage.py seed_portfolio_content --reset
-python manage.py runserver
-```
-
-Admin: `http://127.0.0.1:8000/admin/`
-
-Kafka consumer (separate process):
-```bash
-python manage.py consume_appointments
-```
-
-## Docker
-
-Build and run with Docker Compose:
-
-```bash
-docker compose up --build
-```
-
 ## Seeded Dev Superuser
 
 `python manage.py seed_portfolio_content` will also create a dev superuser when
@@ -99,3 +103,7 @@ Defaults (override via env vars):
 - `BFF_DEV_SUPERUSER_USERNAME` (default: `test@ex.com`)
 - `BFF_DEV_SUPERUSER_EMAIL` (default: `admin@example.com`)
 - `BFF_DEV_SUPERUSER_PASSWORD` (default: `Qweqwe123`)
+
+## Ports
+
+- BFF API: `8001` (host) -> `8000` (container)
