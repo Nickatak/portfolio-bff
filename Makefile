@@ -5,8 +5,8 @@ PYTHON := $(VENV_DIR)/bin/python
 PIP := $(VENV_DIR)/bin/pip
 PORTFOLIO_BFF_PORT ?= 8001
 
-.PHONY: help venv install dev migrate seed superuser \
-	admin-fix-perms admin-install admin-dev admin-build admin-lint \
+.PHONY: help venv install local-up migrate seed superuser \
+	admin-fix-perms admin-install admin-up admin-build admin-lint \
 	db-up db-down \
 	docker-build docker-up docker-down docker-logs
 
@@ -20,12 +20,12 @@ help:
 	@echo "  make migrate        Run Django migrations"
 	@echo "  make seed           Seed portfolio content"
 	@echo "  make superuser      Create Django superuser"
-	@echo "  make dev            Run Django dev server"
+	@echo "  make local-up       Run Django dev server"
 	@echo ""
 	@echo "Admin UI (Next.js):"
 	@echo "  make admin-fix-perms Fix admin-ui/node_modules ownership for local npm use"
 	@echo "  make admin-install  Install admin UI deps"
-	@echo "  make admin-dev      Run admin UI dev server (port 3001)"
+	@echo "  make admin-up       Run admin UI local server (port 3001)"
 	@echo "  make admin-build    Build admin UI"
 	@echo "  make admin-lint     Lint admin UI"
 	@echo ""
@@ -54,7 +54,7 @@ seed:
 superuser:
 	@$(PYTHON) manage.py createsuperuser
 
-dev:
+local-up:
 	@PORT=$${PORTFOLIO_BFF_PORT:-$(PORTFOLIO_BFF_PORT)}; \
 	if command -v lsof >/dev/null 2>&1; then \
 		if lsof -iTCP -sTCP:LISTEN -P | grep -q ":$${PORT} "; then \
@@ -78,7 +78,7 @@ admin-fix-perms:
 admin-install: admin-fix-perms
 	@cd admin-ui && npm install
 
-admin-dev:
+admin-up:
 	@cd admin-ui && npm run dev
 
 admin-build:

@@ -100,9 +100,9 @@ Required env vars:
 - `DB_PASSWORD` (default `portfolio`)
 - `DB_HOST` (default `127.0.0.1` for local, `mysql` in Docker)
 - `DB_PORT` (default `3306`)
-- `ALLOWED_HOSTS` (default `localhost,127.0.0.1,portfolio-bff`)
+- `ALLOWED_HOSTS` (default `localhost,127.0.0.1,portfolio-bff,bff`)
 - `ADMIN_UI_ORIGINS` (default `http://localhost:3001`)
-- `CSRF_TRUSTED_ORIGINS` (default `http://localhost:3001` in Docker compose)
+- `CSRF_TRUSTED_ORIGINS` (default `http://localhost:3001,http://localhost:3101` in Docker compose)
 - `ENABLE_DJANGO_ADMIN` (default `false`)
 
 Docker MySQL uses:

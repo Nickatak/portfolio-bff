@@ -33,8 +33,8 @@ services:
       DB_PASSWORD: ${DB_PASSWORD:-portfolio}
       DB_HOST: ${DB_HOST:-mysql}
       DB_PORT: ${DB_PORT:-3306}
-      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1,portfolio-bff}
-      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-http://localhost:3001}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1,portfolio-bff,bff}
+      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-http://localhost:3001,http://localhost:3101}
       USE_X_FORWARDED_HOST: ${USE_X_FORWARDED_HOST:-}
       USE_X_FORWARDED_PROTO: ${USE_X_FORWARDED_PROTO:-}
       BFF_DEV_SUPERUSER_USERNAME: ${BFF_DEV_SUPERUSER_USERNAME:-test@ex.com}
